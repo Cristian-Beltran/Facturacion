@@ -1,0 +1,35 @@
+{% extends 'template.html' %}
+
+{% block body %}
+    <h1>Tabla de datos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>NO_DOCU</th>
+                <th>GRUPO</th>
+                <th>NO_CLIENTE</th>
+                <th>FECHA</th>
+                <th>TOTAL</th>
+                <th>COD_CONTROL</th>
+                <th>CENTROD</th>
+                <th>TIPO_DOC</th>
+                <th>RUTA</th>
+                <th>NO_ORDEN</th>
+            </tr>
+        </thead>
+        {% for data in contex.DATA %}
+        <tr>
+            <td>{{data.NO_DOCU}}</td>
+            <td>{{data.GRUPO}}</td>
+            <td>{{data.NO_CLIENTE}}</td>
+            <td>{{data.FECHA}}</td>
+            <td>{{data.TOTAl}}</td>
+            <td>{{data.COD_CONTROL}}</td>
+            <td>{{data.CENTROD}}</td>
+            <td>{{data.TIPO_DOC}}</td>
+            <td>{{data.RUTA}}</td>
+            <td>{{NO_ORDEN}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
