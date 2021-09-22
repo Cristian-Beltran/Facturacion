@@ -1,11 +1,12 @@
 {% extends 'template.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
 
 {% block body %}
     <h1>Tabla de datos</h1>
     <div class="content">
         <div class="filter">
-            <form action="">
-                <input type="date" name="" id="">
+            <form action="{{url_for('index')}} method="POST">
+                {{wtf.quick_form(contex.filter)}}
             </form> 
         </div>
         <div class="table">
