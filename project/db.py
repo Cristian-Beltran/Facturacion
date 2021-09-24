@@ -49,31 +49,3 @@ def details(centro,tipo_doc,ruta,ord_auto,factu):
         """
     result = cursor.execute(sql,p_centro=centro,p_tipo_doc=tipo_doc,p_ruta=ruta,p_ord_auto=ord_auto,p_factu=factu)
     return result
-
-def money(centro,tip_doc,factu,ruta,grupo,clien,ord_auto):
-    sql= """
-            function CF_MONE_LINFormula return Char is
-                xx varchar2(5);
-                ZZ VARCHAR2(2);
-            begin
-                select MONEDA
-                    INTO ZZ 
-                from interfaz_fe
-                where no_cia='01'
-                and centrod=:p_centro
-                and tipo_doc=:p_tip_doc
-                and no_docu=:p_factu
-                and ruta=:p_ruta
-                and grupo=:p_grupo
-                and no_cliente=to_number(:p_clien)
-                and no_orden = :p_ord_auto;
-                if ZZ = 'D' THEN
-                    xx:= '$us';
-                else
-                    xx:= 'Bs';
-                end if;
-                return(xx);
-                end
-        """
-    restult = cursor.execute(sql,p_centro=centro,p_tip_doc=tip_doc,p_factu=factu,p_ruta=ruta,p_grupo=grupo,p_clien=clien,p_ord_auto=ord_auto) 
-    return restult

@@ -2,27 +2,26 @@
 {% import 'bootstrap/wtf.html' as wtf%}
 
 {% block body %}
-    <h1>Tabla de datos</h1>
-    <div class="content">
+    <div class="container">
         <div class="filter">
                 {{wtf.quick_form(contex.filter)}}
         </div>
-        <div class="table">
-            <table>
+        <div>
+            <table class="table table-hover table-dark">
                 <thead>
                     <tr>
-                        <th>NO_DOCU</th>
-                        <th>GRUPO</th>
-                        <th>NO_CLIENTE</th>
-                        <th>FECHA</th>
-                        <th>TOTAL</th>
-                        <th>COD_CONTROL</th>
-                        <th>CENTROD</th>
-                        <th>TIPO_DOC</th>
-                        <th>RUTA</th>
-                        <th>NO_ORDEN</th>
-                        <th>DESCARGAR</th>
-                        <th>IMPRIMIR</th>
+                        <th scope="col">NO_DOCU</th>
+                        <th scope="col">GRUPO</th>
+                        <th scope="col">NO_CLIENTE</th>
+                        <th scope="col">FECHA</th>
+                        <th scope="col">TOTAL</th>
+                        <th scope="col">COD_CONTROL</th>
+                        <th scope="col">CENTROD</th>
+                        <th scope="col">TIPO_DOC</th>
+                        <th scope="col">RUTA</th>
+                        <th scope="col">NO_ORDEN</th>
+                        <th scope="col">DESCARGAR</th>
+                        <th scope="col">IMPRIMIR</th>
                     </tr>
                 </thead>
                 {% for data in contex.DATA %}
