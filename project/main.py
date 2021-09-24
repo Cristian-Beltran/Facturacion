@@ -1,7 +1,7 @@
 from flask import Flask,render_template
 from db import table,header,details,money
 from app import create_app
-from .forms import FilterForm
+from forms import FilterForm
 
 app = create_app()
 
@@ -17,3 +17,24 @@ def index():
         'filter':filter_form
     }
     return render_template('index.html',contex=contex) 
+
+@app.route('/download/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:fecha>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
+def donwload_fact(no_docu,grupo,no_cliente,fecha,centrod,tipo_doc,no_orden):
+    head = header(centrod,tip_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
+    detail = details(centrod,tipo_doc,ruta,fecha,no_orden,no_docu)
+    money_factu = money(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
+    return """
+           {{head}}  <br><br><br>
+           {{detail}}<br><br>
+           {{money_factu}}<br><br>
+            """
+@app.route('/print/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:fecha>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
+def print_fact(no_docu,grupo,no_cliente,fecha,centrod,tipo_doc,no_orden):
+    head = header(centrod,tip_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
+    detail = details(centrod,tipo_doc,ruta,fecha,no_orden,no_docu)
+    money_factu = money(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
+    return """
+           head  <br><br><br>
+           detail<br><br>
+           money_factu<br><br>
+            """

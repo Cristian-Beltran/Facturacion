@@ -32,15 +32,15 @@
                     <td>{{data[0]}}</td>
                     <td>{{data[1]}}</td>
                     <td>{{data[2]}}</td>
-                    <td>{{data[3]}}</td>
+                    <td>{{data[3].strftime('%d/%m/%Y')}}</td>
                     <td>{{data[4]}}</td>
                     <td>{{data[5]}}</td>
                     <td>{{data[6]}}</td>
                     <td>{{data[7]}}</td>
                     <td>{{data[8]}}</td>
-                    <td>{{data[9]}}</td>
-                    <td>Descargar</td>
-                    <td>Imprimir</td>
+                    <td>{{data[9]}}</td>    
+                    <td><a href="/download/{{data[0]}}/{{data[1]}}/{{data[2]}}/{{data[3].strftime('%d/%m/%Y')}}/{{data[6]}}/{{data[7]}}/{{data[8]}}/{{data[9]}}">Descargar</a></td>
+                    <td><a href="/print/{{data[0]}}/{{data[1]}}/{{data[2]}}/{{data[3].strftime('%d/%m/%Y')}}/{{data[6]}}/{{data[7]}}/{{data[8]}}/{{data[9]}}">Imprimir</a></td>
                 </tr>
                 {% endfor %}
             </table>

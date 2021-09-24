@@ -1,7 +1,7 @@
 import cx_Oracle
 
 connect = cx_Oracle.connect("FA53/FA53@192.168.2.250:1521/ATBPRU")
-cursor = connection.cursor()
+cursor = connect.cursor()
 
 def table(periodo):
     sql = """
@@ -20,11 +20,11 @@ def table(periodo):
     result = cursor.execute(sql,periodo=periodo)
     return result
 
-def header(cia,centro,tipo_doc,factu,ruta,grupo,clien,fecha,ord_auto):
+def header(centro,tipo_doc,factu,ruta,grupo,clien,fecha,ord_auto):
     sql = """
             select TIPO_DOC tipo_doc_c,NO_DOCU no_docu_C,RUTA ruta_c, GRUPO grupo_c, NO_CLIENTE no_cliente_C, NO_RUC no_ruc_c, NBR_CLIENTE nbr_cliente_c,FECHA fecha_c, TIPO_CAMBIO tipo_cambio_c, OBSERV1 observ1_c, OBSERV2 obvserv2_c, TOTAL total_c, NO_SERIE no_serie_c, NO_ORDEN no_orden_c, NO_SUCURSAL no_sucursal, MONEDA moneda_c, IMPRESO impreso_c, COD_CONTROL cod_control_c, OBSERV4 observ4_c, SUB_TOTAL, sub_total_c, DESCUENTO descuento_c, IMPUESTO impuesto_c
             from interfaz_fe
-            where no_cia= :p_cia
+            where no_cia='01' 
                 and centrod=:p_centro
                 and tipo_doc=:p_tip_doc
                 and no_docu=:p_factu
@@ -38,11 +38,11 @@ def header(cia,centro,tipo_doc,factu,ruta,grupo,clien,fecha,ord_auto):
     result = cursor.execute(sql,p_cia=cia,p_centro=centro,p_tip_doc=tipo_doc,p_factu=factu,p_ruta=ruta,p_grupo=grupo,p_clien=clien,p_fecha=fecha,p_ord_auto=ord_auto)
     return result
 
-def details(cia,centro,tipo_doc,ruta,fecha,ord_auto,factu):
+def details(centro,tipo_doc,ruta,fecha,ord_auto,factu):
     sql = """
             select NO_CIA,CENTROD,TIPO_DOC,PERIODO,FECHA,NO_F300,RUTA,NO_FACTU,NIVEL,SPOT,SEGUNDO,FECH_INI,FECH_FIN,PASES,TOTAL,PROGRAMA,COSTO_SEG,NO_LINEA,BODEGA,CLASE,CATEGORIA,NO_ARTI,DETALLE
             from ARFAFL_DET
-            where no_cia=:p_cia
+            where no_cia='01'
                 and centrod=:p_centro
                 and tipo_doc=:p_tip_doc
                 and ruta=:p_ruta
@@ -53,7 +53,7 @@ def details(cia,centro,tipo_doc,ruta,fecha,ord_auto,factu):
     result = cursor.execute(sql,p_cia=cia,p_centro=centro,p_tipo_doc=tipo_doc,p_ruta=ruta,p_fecha=fecha,p_ord_auto=ord_auto,p_factu=factu)
     return result
 
-def money(cia,centro,tip_doc,factu,ruta,grupo,clien,fecha,ord_auto):
+def money(centro,tip_doc,factu,ruta,grupo,clien,fecha,ord_auto):
     sql= """
             funtion CF_MONE_LINForumla return Char is
                 xx varchar2(5);
@@ -62,7 +62,7 @@ def money(cia,centro,tip_doc,factu,ruta,grupo,clien,fecha,ord_auto):
                 select MONEDA
                     INTO ZZ 
                 from interfaz_fe
-                where no_cia=:p_cia
+                where no_cia='01'
                 and centrod=:p_centro
                 and tipo_doc=:p_tip_doc
                 and no_docu=:p_factu
