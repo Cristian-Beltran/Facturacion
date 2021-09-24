@@ -8,9 +8,10 @@ app = create_app()
 @app.route('/',methods=['GET', 'POST'])
 def index(): 
     filter_form = FilterForm()
-    fecha = '2019'
+    fecha = '2021'
     if filter_form.validate_on_submit():
-        fecha = filter_form.fecha.data
+        fecha = (filter_form.fecha.data)
+        print(fecha)
     data = table(fecha) 
     contex = {
         'DATA':data,
@@ -18,21 +19,21 @@ def index():
     }
     return render_template('index.html',contex=contex) 
 
-@app.route('/download/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:fecha>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
-def donwload_fact(no_docu,grupo,no_cliente,fecha,centrod,tipo_doc,no_orden):
-    head = header(centrod,tip_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
-    detail = details(centrod,tipo_doc,ruta,fecha,no_orden,no_docu)
-    money_factu = money(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
-    return """
-           {{head}}  <br><br><br>
-           {{detail}}<br><br>
-           {{money_factu}}<br><br>
-            """
-@app.route('/print/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:fecha>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
-def print_fact(no_docu,grupo,no_cliente,fecha,centrod,tipo_doc,no_orden):
-    head = header(centrod,tip_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
-    detail = details(centrod,tipo_doc,ruta,fecha,no_orden,no_docu)
-    money_factu = money(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,fecha,no_orden)
+@app.route('/download/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
+def donwload_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
+    head = header(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
+    detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
+    #money_factu = money(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
+    contex = {
+        'head' : head,
+        'detail': detail,
+    }
+    return render_template('print.html',contex=contex)
+@app.route('/print/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
+def print_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,no_orden):
+    head = header(centrod,tip_doc,no_docu,ruta,grupo,no_cliente,no_orden)
+    detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
+    money_factu = money(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
     return """
            head  <br><br><br>
            detail<br><br>

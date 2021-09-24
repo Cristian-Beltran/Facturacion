@@ -5,9 +5,7 @@
     <h1>Tabla de datos</h1>
     <div class="content">
         <div class="filter">
-            <form action="{{url_for('index')}} method="POST">
                 {{wtf.quick_form(contex.filter)}}
-            </form> 
         </div>
         <div class="table">
             <table>
@@ -39,8 +37,8 @@
                     <td>{{data[7]}}</td>
                     <td>{{data[8]}}</td>
                     <td>{{data[9]}}</td>    
-                    <td><a href="/download/{{data[0]}}/{{data[1]}}/{{data[2]}}/{{data[3].strftime('%d/%m/%Y')}}/{{data[6]}}/{{data[7]}}/{{data[8]}}/{{data[9]}}">Descargar</a></td>
-                    <td><a href="/print/{{data[0]}}/{{data[1]}}/{{data[2]}}/{{data[3].strftime('%d/%m/%Y')}}/{{data[6]}}/{{data[7]}}/{{data[8]}}/{{data[9]}}">Imprimir</a></td>
+                    <td><a href="/download/{{data[0]}}/{{data[1]}}/{{data[2]}}/{{data[6]}}/{{data[7]}}/{{data[8]}}/{{data[9]}}">Descargar</a></td>
+                    <td><a href="/print/{{data[0]}}/{{data[1]}}/{{data[2]}}/{{data[6]}}/{{data[7]}}/{{data[8]}}/{{data[9]}}">Imprimir</a></td>
                 </tr>
                 {% endfor %}
             </table>
