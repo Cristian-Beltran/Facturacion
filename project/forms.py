@@ -6,3 +6,8 @@ class FilterForm(FlaskForm):
     fecha = StringField('Ingrese una fecha',validators=[DataRequired()])
     submit = SubmitField('Enviar')
 
+
+class RegisterFactu(FlaskForm):
+    datos = StringField('Ingrese un valor ',validators=[DataRequired()])
+    submit = SubmitField('Guardar')
+

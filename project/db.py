@@ -34,7 +34,7 @@ def header(centro,tipo_doc,factu,ruta,grupo,clien,ord_auto):
                 and no_orden=:p_ord_auto
         """
     result = cursor.execute(sql,p_centro=centro,p_tip_doc=tipo_doc,p_factu=factu,p_ruta=ruta,p_grupo=grupo,p_clien=clien,p_ord_auto=ord_auto)
-    return result
+    return result.fetchone()
 
 def details(centro,tipo_doc,ruta,ord_auto,factu):
     sql = """
@@ -48,4 +48,5 @@ def details(centro,tipo_doc,ruta,ord_auto,factu):
                 and no_factu=:p_factu
         """
     result = cursor.execute(sql,p_centro=centro,p_tipo_doc=tipo_doc,p_ruta=ruta,p_ord_auto=ord_auto,p_factu=factu)
-    return result
+    return result.fetchone()
+

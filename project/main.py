@@ -2,6 +2,7 @@ from flask import Flask,render_template
 from db import table,header,details
 from app import create_app
 from forms import FilterForm
+from pdf import printPDF
 
 app = create_app()
 
@@ -23,10 +24,12 @@ def index():
 def download_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
     head = header(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
     detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
+    print(type(head))
     contex = {
         'head' : head,
         'detail': detail,
     }
+    printPDF()
     return render_template('print.html',contex=contex)
 
 @app.route('/print/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
@@ -35,6 +38,10 @@ def print_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
     detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
     contex = {
         'head' : head,
-        'detail': detail,
+        'detail': detail
     }
     return render_template('print.html',contex=contex)
+
+@app.route('/facturacion')
+def facturacion():
+    return "Pagina de facturacion"
