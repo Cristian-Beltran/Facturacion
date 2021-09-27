@@ -2,4 +2,4 @@
 /project/pdf.py
 /project/Listado de usuarios.pdf
 /project/DB_USUARIOS.db
-/project/app/static/images/*.png
+*.png
