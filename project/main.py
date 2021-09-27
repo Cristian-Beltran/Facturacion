@@ -1,7 +1,7 @@
 from flask import Flask,render_template
 from db import table,header,details
 from app import create_app
-from forms import FilterForm
+from forms import FilterForm,RegisterFactu
 from pdf import printPDF
 
 app = create_app()
@@ -44,4 +44,8 @@ def print_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
 
 @app.route('/facturacion')
 def facturacion():
-    return "Pagina de facturacion"
+    factu_form = RegisterFactu()
+    contex = {
+        'factu_form':factu_form
+    }
+    return render_template('factura.html',contex=contex) 

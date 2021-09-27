@@ -1,46 +1,46 @@
 INTERFAZ_FE
 (
-  MOVIMIENTO     VARCHAR2(2 BYTE),
-  ORIGEN         VARCHAR2(2 BYTE),
-  NO_CIA         VARCHAR2(2 BYTE),
-  CENTROD        VARCHAR2(2 BYTE),
-  TIPO_DOC       VARCHAR2(2 BYTE),
-  NO_DOCU        VARCHAR2(6 BYTE),
-  RUTA           VARCHAR2(4 BYTE),
-  GRUPO          VARCHAR2(2 BYTE),
-  NO_CLIENTE     NUMBER(6),
-  NO_RUC         VARCHAR2(16 BYTE),
-  NBR_CLIENTE    VARCHAR2(80 BYTE),
-  DIRECCION      VARCHAR2(80 BYTE),
-  FECHA          DATE,
-  TIPO_CAMBIO    NUMBER(7,2),
-  OBSERV1        VARCHAR2(500 BYTE),
-  OBSERV2        VARCHAR2(500 BYTE),
-  OBSERV3        VARCHAR2(60 BYTE),
-  TOTAL_ITEMS    NUMBER(17,2),
-  SUB_TOTAL      NUMBER(17,2),
-  DESCUENTO      NUMBER(17,2),
-  IMPUESTO       NUMBER(17,2),
-  TOTAL          NUMBER(17,2),
-  IMP_SINO       VARCHAR2(1 BYTE),
-  PORC_IV        NUMBER(5,2),
-  TIPO_DOC_REF   VARCHAR2(2 BYTE),
-  RUTA_REF       VARCHAR2(4 BYTE),
-  NO_DOCU_REF    VARCHAR2(6 BYTE),
-  NO_SERIE       VARCHAR2(15 BYTE),
-  NO_ORDEN       VARCHAR2(15 BYTE),
-  NO_SUCURSAL    VARCHAR2(2 BYTE),
-  VALIDADO       VARCHAR2(1 BYTE),
-  ERROR          VARCHAR2(200 BYTE),
-  MONEDA         VARCHAR2(2 BYTE),
-  SERVICIO_FACT  VARCHAR2(5 BYTE),
-  TIPO_FACT      VARCHAR2(1 BYTE)               DEFAULT 'E',
-  AFECTA_SALDO   VARCHAR2(1 BYTE)               DEFAULT 'S',
-  IMPRESO        VARCHAR2(1 BYTE)               DEFAULT 'S',
-  COD_CONTROL    VARCHAR2(15 BYTE),
-  OBSERV4        VARCHAR2(85 BYTE),
-  ROL            VARCHAR2(3 BYTE),
-  REGIONAL       VARCHAR2(2 BYTE)
+  MOVIMIENTO     VARCHAR2(2 BYTE), fijo -> FA
+  ORIGEN         VARCHAR2(2 BYTE), fijo -> TV 
+  NO_CIA         VARCHAR2(2 BYTE), fijo -> 01
+  CENTROD        VARCHAR2(2 BYTE), fijo -> 01
+  TIPO_DOC       VARCHAR2(2 BYTE), fijo -> 01
+  NO_DOCU        VARCHAR2(6 BYTE), Obtener de -> ARFAPAR
+  RUTA           VARCHAR2(4 BYTE), Ruta -> 01 si grupo <50 y 2 si >50
+  GRUPO          VARCHAR2(2 BYTE), Obtener de -> ARCCGR
+  NO_CLIENTE     NUMBER(6),  obtener de -> ARCCNC
+  NO_RUC         VARCHAR2(16 BYTE), campo de texto con sugerencia de ARCCNC
+  NBR_CLIENTE    VARCHAR2(80 BYTE), campo de texto con valor de ARCCNC
+  DIRECCION      VARCHAR2(80 BYTE), campo de texto
+  FECHA          DATE, Obtener fecha actual
+  TIPO_CAMBIO    NUMBER(7,2), fijo 6.96
+  OBSERV1        VARCHAR2(500 BYTE), campo de texto (opcional)
+  OBSERV2        VARCHAR2(500 BYTE), campo de texto (opcional)
+  OBSERV3        VARCHAR2(60 BYTE), es -> NO_DOCU
+  TOTAL_ITEMS    NUMBER(17,2), es un campo integer del numero de lineas
+  SUB_TOTAL      NUMBER(17,2), es -> total - impuesto - descuento 
+  DESCUENTO      NUMBER(17,2), campo -> 0
+  IMPUESTO       NUMBER(17,2), es -> total*(porc_IV/100) 
+  TOTAL          NUMBER(17,2), es -> Campo numerico
+  IMP_SINO       VARCHAR2(1 BYTE), fijo -> S 
+  PORC_IV        NUMBER(5,2),  fijo -> 13
+  TIPO_DOC_REF   VARCHAR2(2 BYTE), es -> Campo de texto opcional 
+  RUTA_REF       VARCHAR2(4 BYTE), es -> Campo de texto opcional
+  NO_DOCU_REF    VARCHAR2(6 BYTE), es -> Campo de texto opcional
+  NO_SERIE       VARCHAR2(15 BYTE), 1
+  NO_ORDEN       VARCHAR2(15 BYTE), ARFAPAR
+  NO_SUCURSAL    VARCHAR2(2 BYTE), fijo -> 1
+  VALIDADO       VARCHAR2(1 BYTE), fijo -> S
+  ERROR          VARCHAR2(200 BYTE), fijo -> campo vacio
+  MONEDA         VARCHAR2(2 BYTE), select -> D y P
+  SERVICIO_FACT  VARCHAR2(5 BYTE), fijo -> .
+  TIPO_FACT      VARCHAR2(1 BYTE)               DEFAULT 'E', fijo -> E
+  AFECTA_SALDO   VARCHAR2(1 BYTE)               DEFAULT 'S', fijo -> S
+  IMPRESO        VARCHAR2(1 BYTE)               DEFAULT 'S', fijo -> S
+  COD_CONTROL    VARCHAR2(15 BYTE), vacio o crear script para crear
+  OBSERV4        VARCHAR2(85 BYTE), vacio
+  ROL            VARCHAR2(3 BYTE), vacio
+  REGIONAL       VARCHAR2(2 BYTE) vacio
 )
 
 INTERFAZ_FL
