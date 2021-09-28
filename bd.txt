@@ -5,12 +5,12 @@ INTERFAZ_FE
   NO_CIA         VARCHAR2(2 BYTE), fijo -> 01
   CENTROD        VARCHAR2(2 BYTE), fijo -> 01
   TIPO_DOC       VARCHAR2(2 BYTE), fijo -> 01
-  NO_DOCU        VARCHAR2(6 BYTE), Obtener de -> ARFAPAR
+  NO_DOCU        VARCHAR2(6 BYTE), Obtener de -> ARFAPAR no_act +1
   RUTA           VARCHAR2(4 BYTE), Ruta -> 01 si grupo <50 y 2 si >50
   GRUPO          VARCHAR2(2 BYTE), Obtener de -> ARCCGR
   NO_CLIENTE     NUMBER(6),  obtener de -> ARCCNC
-  NO_RUC         VARCHAR2(16 BYTE), campo de texto con sugerencia de ARCCNC
-  NBR_CLIENTE    VARCHAR2(80 BYTE), campo de texto con valor de ARCCNC
+  NO_RUC         VARCHAR2(16 BYTE), campo de texto con sugerencia de ARCCNC cedula
+  NBR_CLIENTE    VARCHAR2(80 BYTE), campo de texto con valor de ARCCNC 
   DIRECCION      VARCHAR2(80 BYTE), campo de texto
   FECHA          DATE, Obtener fecha actual
   TIPO_CAMBIO    NUMBER(7,2), fijo 6.96
@@ -28,9 +28,9 @@ INTERFAZ_FE
   RUTA_REF       VARCHAR2(4 BYTE), es -> Campo de texto opcional
   NO_DOCU_REF    VARCHAR2(6 BYTE), es -> Campo de texto opcional
   NO_SERIE       VARCHAR2(15 BYTE), 1
-  NO_ORDEN       VARCHAR2(15 BYTE), ARFAPAR
+  NO_ORDEN       VARCHAR2(15 BYTE), ARFAPAR  orden
   NO_SUCURSAL    VARCHAR2(2 BYTE), fijo -> 1
-  VALIDADO       VARCHAR2(1 BYTE), fijo -> S
+  VALIDADO       VARCHAR2(1 BYTE), fijo -> N
   ERROR          VARCHAR2(200 BYTE), fijo -> campo vacio
   MONEDA         VARCHAR2(2 BYTE), select -> D y P
   SERVICIO_FACT  VARCHAR2(5 BYTE), fijo -> .
@@ -45,58 +45,58 @@ INTERFAZ_FE
 
 INTERFAZ_FL
 (
-  NO_CIA       VARCHAR2(2 BYTE),
-  CENTROD      VARCHAR2(2 BYTE),
-  TIPO_DOC     VARCHAR2(2 BYTE),
-  NO_DOCU      VARCHAR2(6 BYTE),
-  RUTA         VARCHAR2(4 BYTE),
-  NO_ITEM      NUMBER(2),
-  CLASE        VARCHAR2(3 BYTE),
-  CATEGORIA    VARCHAR2(3 BYTE),
-  NO_ARTI      VARCHAR2(20 BYTE),
-  CANTIDAD     NUMBER(8,2),
-  PORC_DESC    NUMBER(6,2),
-  PRECIO       NUMBER(12,2),
-  DESCUENTO    NUMBER(17,2),
-  TOTAL        NUMBER(17,2),
-  I_VEN        VARCHAR2(1 BYTE),
-  IVEN_N       NUMBER(17,2),
-  NO_ITEM_REF  NUMBER(2),
-  UN_DEVUEL    NUMBER(8,2),
-  NO_SERIE     VARCHAR2(14 BYTE),
-  NO_ORDEN     VARCHAR2(15 BYTE),
-  NO_SUCURSAL  VARCHAR2(2 BYTE),
-  VALIDADO     VARCHAR2(1 BYTE),
-  ERROR        VARCHAR2(200 BYTE),
-  MONEDA       VARCHAR2(2 BYTE),
-  ALMACEN      VARCHAR2(10 BYTE),
-  DETALLE      VARCHAR2(200 BYTE)
+  NO_CIA       VARCHAR2(2 BYTE), fijo -> 01
+  CENTROD      VARCHAR2(2 BYTE), fijo -> 01
+  TIPO_DOC     VARCHAR2(2 BYTE), fijo -> 01
+  NO_DOCU      VARCHAR2(6 BYTE), ARFAPAR no_actu +1
+  RUTA         VARCHAR2(4 BYTE), grupo < 50 -> 1 y grupo > 50 -> 2
+  NO_ITEM      NUMBER(2), numero de filas
+  CLASE        VARCHAR2(3 BYTE), 000
+  CATEGORIA    VARCHAR2(3 BYTE), fijo -> 000
+  NO_ARTI      VARCHAR2(20 BYTE), ARFASE : servicio 
+  CANTIDAD     NUMBER(8,2), fijo -> 1
+  PORC_DESC    NUMBER(6,2), fijo -> 0
+  PRECIO       NUMBER(12,2), monto total articulo number en ARFASE
+  DESCUENTO    NUMBER(17,2), fijo -> 0
+  TOTAL        NUMBER(17,2), monto total articulo 
+  I_VEN        VARCHAR2(1 BYTE), fijo -> 'S'
+  IVEN_N       NUMBER(17,2), total * .13
+  NO_ITEM_REF  NUMBER(2),  campo de texto opcional
+  UN_DEVUEL    NUMBER(8,2), vacio 
+  NO_SERIE     VARCHAR2(14 BYTE), fijo ->0
+  NO_ORDEN     VARCHAR2(15 BYTE),orden de  arfapar 
+  NO_SUCURSAL  VARCHAR2(2 BYTE), fijo -> 1
+  VALIDADO     VARCHAR2(1 BYTE), fijo -> 'N'
+  ERROR        VARCHAR2(200 BYTE), vacio
+  MONEDA       VARCHAR2(2 BYTE), vacio
+  ALMACEN      VARCHAR2(10 BYTE), fijo -> .
+  DETALLE      VARCHAR2(200 BYTE)  vacio
 )
 ARFAFL_DET
 (
-  NO_CIA     VARCHAR2(2 BYTE)                   NOT NULL,
-  CENTROD    VARCHAR2(2 BYTE)                   NOT NULL,
-  TIPO_DOC   VARCHAR2(2 BYTE)                   NOT NULL,
-  PERIODO    VARCHAR2(4 BYTE)                   NOT NULL,
-  FECHA      DATE                               NOT NULL,
-  NO_F300    VARCHAR2(15 BYTE)                  NOT NULL,
-  RUTA       VARCHAR2(4 BYTE)                   NOT NULL,
-  NO_FACTU   VARCHAR2(6 BYTE)                   NOT NULL,
-  NO_LINEA   NUMBER(2)                          NOT NULL,
-  BODEGA     VARCHAR2(4 BYTE)                   NOT NULL,
-  CLASE      VARCHAR2(3 BYTE)                   NOT NULL,
-  CATEGORIA  VARCHAR2(3 BYTE)                   NOT NULL,
-  NO_ARTI    VARCHAR2(20 BYTE)                  NOT NULL,
-  NIVEL      VARCHAR2(2 BYTE),
-  SPOT       VARCHAR2(20 BYTE),
-  SEGUNDO    NUMBER(3),
-  FECH_INI   DATE,
-  FECH_FIN   DATE,
-  PASES      NUMBER(3),
-  TOTAL      NUMBER(17,2),
-  PROGRAMA   VARCHAR2(35 BYTE),
-  COSTO_SEG  NUMBER(17,6),
-  DETALLE    VARCHAR2(200 BYTE)
+  NO_CIA     VARCHAR2(2 BYTE)                   NOT NULL, fijo -> 01
+  CENTROD    VARCHAR2(2 BYTE)                   NOT NULL, fijo -> 01
+  TIPO_DOC   VARCHAR2(2 BYTE)                   NOT NULL, fijo -> 01
+  PERIODO    VARCHAR2(4 BYTE)                   NOT NULL, periodo -> año
+  FECHA      DATE                               NOT NULL, fecha 
+  NO_F300    VARCHAR2(15 BYTE)                  NOT NULL, orden
+  RUTA       VARCHAR2(4 BYTE)                   NOT NULL, Ruta en base al grupo
+  NO_FACTU   VARCHAR2(6 BYTE)                   NOT NULL, es el numero de doc
+  NO_LINEA   NUMBER(2)                          NOT NULL, no item 
+  BODEGA     VARCHAR2(4 BYTE)                   NOT NULL, fijo -> 0000
+  CLASE      VARCHAR2(3 BYTE)                   NOT NULL, fijo -> 000
+  CATEGORIA  VARCHAR2(3 BYTE)                   NOT NULL, fijo -> 000
+  NO_ARTI    VARCHAR2(20 BYTE)                  NOT NULL, ARFASE : servicio 
+  NIVEL      VARCHAR2(2 BYTE),     campo de texto abierto maximo 2
+  SPOT       VARCHAR2(20 BYTE),  campo abierto 
+  SEGUNDO    NUMBER(3), campo abierto 
+  FECH_INI   DATE, campo abierto
+  FECH_FIN   DATE, campo abierto
+  PASES      NUMBER(3), numero campo abierto
+  TOTAL      NUMBER(17,2),  total articulo 
+  PROGRAMA   VARCHAR2(35 BYTE),  campo abierto requerido
+  COSTO_SEG  NUMBER(17,6), total / pases
+  DETALLE    VARCHAR2(200 BYTE) campo abierto opcional
 )
 
 

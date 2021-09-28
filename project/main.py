@@ -1,5 +1,5 @@
 from flask import Flask,render_template
-from db import table,header,details
+from db import table,header,details,clientes
 from app import create_app
 from forms import FilterForm,RegisterFactu
 from pdf import printPDF
@@ -49,3 +49,18 @@ def facturacion():
         'factu_form':factu_form
     }
     return render_template('factura.html',contex=contex) 
+
+
+@app.route('/_get_clientes/<string:grupo>')
+def _get_clientes(grupo):
+    clientes = clientes(grupo)
+    clientes_array = []
+
+    for cliente in clientes:
+        cliente_obj= {}
+        cliente_obj['id'] = cliente[0]
+        cliente_obj['name'] = cliente[1]
+        clientes_array.append(cliente_obj)
+    
+    return jsonify({'clientes':clientes_array})
+

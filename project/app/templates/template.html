@@ -17,5 +17,6 @@
     {% endblock %}
     {% block scripts %}
         {{ super() }}
+        <script src="{{ url_for('static',filename='css/script.js')}}" type="text/javascript" charset="utf-8"></script>
     {% endblock %}
 {% endblock %}

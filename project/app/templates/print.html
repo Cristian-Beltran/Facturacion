@@ -2,7 +2,11 @@
 <br><br><br><br>
 <p>Aqui comienzan los detalles</p>
 <br>
- {{contex.detail}}
+
+{% for detail in contex.detail %}
+ {{detail}}
+ <br><br>
+{% endfor %}
 <br><br><br>
 
 

@@ -48,5 +48,25 @@ def details(centro,tipo_doc,ruta,ord_auto,factu):
                 and no_factu=:p_factu
         """
     result = cursor.execute(sql,p_centro=centro,p_tipo_doc=tipo_doc,p_ruta=ruta,p_ord_auto=ord_auto,p_factu=factu)
-    return result.fetchone()
+    return result.fetchall()
+
+
+def grupos():
+    sql= """
+            select grupo,descripcion 
+            from ARCCGR 
+            where no_cia=1
+        """
+    result = cursor.execute(sql)
+    return result.fetchall()
+
+def clientes(grupo):
+    sql= """
+            select no_cliente, nombre, cedula 
+            from ARCCMC 
+            where no_cia='01'
+            and grupo=:p_grupo
+        """
+    result = cursor.execute(sql,p_grupo=grupo)
+    return result.fetchall()
 
