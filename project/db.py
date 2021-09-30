@@ -62,11 +62,21 @@ def grupos():
 
 def clientes(grupo):
     sql= """
-            select no_cliente, nombre, cedula 
+            select no_cliente, nombre 
             from ARCCMC 
             where no_cia='01'
             and grupo=:p_grupo
         """
     result = cursor.execute(sql,p_grupo=grupo)
     return result.fetchall()
+
+def cliente(no_cliente):
+    sql= """
+            select nombre,cedula 
+            from ARCCMC 
+            where no_cia='01'
+            and no_cliente=:p_no_cliente
+        """
+    result = cursor.execute(sql,p_no_cliente=no_cliente)
+    return result.fetchone()
 

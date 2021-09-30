@@ -1,9 +1,9 @@
 {% extends 'bootstrap/base.html' %}
 {% block head %}
     {{ super() }}
-
+    <meta charset="UTF-8">
     <title>
-        {% block title %}Facturacion|{% endblock %}
+        {% block title %}Facturacion |{% endblock %}
     </title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
 {% endblock %}
@@ -16,7 +16,7 @@
     {% block content %}
     {% endblock %}
     {% block scripts %}
+        <script src="{{ url_for('static',filename='js/script.js')}}" charset="UTF-8"></script>
         {{ super() }}
-        <script src="{{ url_for('static',filename='css/script.js')}}" type="text/javascript" charset="utf-8"></script>
     {% endblock %}
 {% endblock %}

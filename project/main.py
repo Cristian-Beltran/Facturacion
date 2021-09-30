@@ -1,5 +1,5 @@
-from flask import Flask,render_template
-from db import table,header,details,clientes
+from flask import Flask,render_template,jsonify
+from db import table,header,details,clientes,cliente
 from app import create_app
 from forms import FilterForm,RegisterFactu
 from pdf import printPDF
@@ -45,18 +45,18 @@ def print_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
 @app.route('/facturacion')
 def facturacion():
     factu_form = RegisterFactu()
+    factu_form.cliente.choices = [(cliente[0],cliente[1]) for cliente in clientes('36')]
     contex = {
-        'factu_form':factu_form
+        'factu_form':factu_form,
     }
     return render_template('factura.html',contex=contex) 
 
 
 @app.route('/_get_clientes/<string:grupo>')
 def _get_clientes(grupo):
-    clientes = clientes(grupo)
+    clientes_data = clientes(grupo)
     clientes_array = []
-
-    for cliente in clientes:
+    for cliente in clientes_data:
         cliente_obj= {}
         cliente_obj['id'] = cliente[0]
         cliente_obj['name'] = cliente[1]
@@ -64,3 +64,10 @@ def _get_clientes(grupo):
     
     return jsonify({'clientes':clientes_array})
 
+@app.route('/_get_cliente/<string:no_cliente>')
+def _get_cliente(no_cliente):
+    cliente_data = cliente(no_cliente)
+    cliente_obj={}
+    cliente_obj['cedula'] = cliente_data[1] 
+    cliente_obj['nombre'] = cliente_data[0]
+    return jsonify(cliente_obj)
