@@ -1,9 +1,9 @@
-from flask import Flask,render_template,jsonify
-from db import table,header,details,clientes,cliente
+from flask import Flask,render_template,jsonify,request,redirect,url_for
+from db import table,header,details,clientes,cliente,arfapar,insert_cabecera,insert_detalle
 from app import create_app
 from forms import FilterForm,RegisterFactu
 from pdf import printPDF
-
+from datetime import datetime
 app = create_app()
 
 @app.route('/',methods=['GET', 'POST'])
@@ -23,12 +23,19 @@ def index():
 @app.route('/facturacion',methods=['GET', 'POST'])
 def facturacion():    
     factu_form = RegisterFactu()
-    factu_form.cliente.choices = [(cliente[0],cliente[1]) for cliente in clientes('36')]
-    factu_form.detalle.min_entries=1
-    if factu_form.validate_on_submit():
+    if request.method=='POST':
+        now = datetime.now()
+        data = arfapar()
+        orden = data[0]
+        no_docu = data[1] +1
         grupo = (factu_form.grupo.data)
+        if int(grupo) < 50:
+            ruta = '01'
+        else:
+            ruta = '02'
         cliente = (factu_form.cliente.data)
         no_ruc = (factu_form.no_ruc.data)
+        nbr_cliente =(factu_form.nbr_cliente.data)
         direccion = (factu_form.direccion.data)
         observ1 = (factu_form.observ1.data)
         total_items = (factu_form.total_items.data)
@@ -36,6 +43,7 @@ def facturacion():
         ruta_ref = (factu_form.ruta_ref.data)
         no_docu_ref = (factu_form.no_docu_ref.data)
         moneda  = (factu_form.moneda.data)
+
         no_arti = (factu_form.no_arti.data)
         precio = (factu_form.precio.data)
         no_item_ref = (factu_form.no_item_ref.data)
@@ -47,9 +55,10 @@ def facturacion():
         pases = (factu_form.pases.data)
         programa = (factu_form.programa.data)
         detalle = (factu_form.detalle.data)
-        print (grupo)
-        print (cliente)
-        print(ruta_ref)
+        insert_cabecera(no_docu,ruta,grupo,cliente,no_ruc,nbr_cliente,direccion,now.date(),observ1,total_items,precio-(precio*.13),precio*.13,precio,tipo_doc_ref,ruta_ref,no_docu_ref,orden,moneda)
+
+        insert_detalle(no_docu,ruta,1,no_arti,precio,precio-(precio*.13),precio*.13,no_item_ref,orden,now.year,now.date(),nivel,spot,segundo,fech_ini,fech_fin,pases,programa,(precio-(precio*0.13))/pases,detalle)
+        return redirect(url_for('index'))
     contex = {
         'factu_form':factu_form,
     }

@@ -96,16 +96,18 @@ def arfapar():
     result = cursor.execute(sql)
     return result.fetchone()
 
-def inser_cabecera(no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,observ1,total_items,sub_total,impuesto,total,tipo_doc_ref,ruta_ref,no_docu_ref,no_orden,moneda):
+def insert_cabecera(no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,observ1,total_items,sub_total,impuesto,total,tipo_doc_ref,ruta_ref,no_docu_ref,no_orden,moneda):
     sql="""
         insert into interfaz_fe(movimiento,origen,tv,no_cia,centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,tipo_cambio,observ1,observ2,observ3,total,items,sub_total,descuento,impuesto,total,imp_sino,porc_iv,tipo_doc_ref,ruta_ref,no_docu_ref,no_serie,no_orden,no_sucursal,validado,error,moneda,servicio_fac,tipo_fact,afecta_saldo,impreso,cod_control,observ4,rol,regional) values('FA','TV','01','01','01',:p_no_docu,:p_ruta,:p_grupo,:p_no_cliente,:p_no_ruc,:p_nbr_cliente,:p_direccion,:p_fecha,6.96,:p_observ1,'',p_no_docu,:p_total_items,:p_sub_total,0,:p_impuesto,:p_total,'S',13,:p_tipo_doc_ref,:p_ruta_ref,:p_no_docu_ref,'1',:p_no_orden,'1','N','',:p_moneda,'.','E','S','S','','','','')
         """
+    cursor.execute(sql,p_no_docu=no_docu,p_ruta=ruta,p_grupo=grupo,p_no_cliente=no_cliente,p_no_ruc=no_ruc,p_nbr_cliente=nbr_cliente,p_direccion=direccion,p_fecha=fecha,p_observ1=observ1,p_total_items=total_items,p_sub_total=sub_total,p_impuesto=impuesto,p_total=total,p_tipo_doc_ref==tipo_doc_ref,p_ruta_ref=ruta_ref,p_no_docu_ref=no_docu_ref,p_no_orden=no_orden,p_moneda=moneda)
 
 def insert_detalle(no_docu,ruta,no_item,no_arti,precio,total,iven_n,no_item_ref,no_orden,periodo,fecha,nivel,spot,segundo,fech_ini,fech_fin,pases,programa,costo_seg,detalle):
     sql="""
         insert into interfa_fl(no_cia,centrod,tipo_doc,no_docu,ruta,no_item,clase,categoria,no_arti,cantidad,porc_desc,precio,descuento,total,i_ven,iven_n,no_item_ref,un_devuel,no_serie,no_orden,no_sucursal,validado,error,moneda,almacen,detalle values('01','01','01',:p_no_docu,:p_ruta,:p_no_item,'000','000',:p_no_arti,1,0,:p_precio,0,:p_total,'S',:p_iven_n,:p_no_item_ref,'','0',:p_no_orden,'1','N','','.','')) 
         """ 
-
+    cursor.execute(sql,p_no_docu=no_docu,p_ruta=ruta,p_no_item=no_item,p_no_arti=no_arti,p_precio=precio,p_total=total,p_iven_n=iven_n,p_no_item_ref=no_item_ref,p_no_orden=no_orden)
     sql="""
         insert into arfafl_det(no_cia,centrod,tipo_doc,periodo,fehca,no_f300,ruta,no_factu,no_linea,bodega,clase,categoria,no_arti,nivel,spot,segundo,fech_ini,fech_fin,pases,total,programa,costo_seg,detalle) values('01', '01','01',:p_periodo,:p_fecha,:p_no_orden,:p_ruta,:p_no_docu,:p_no_item,'0000','000','000',:p_no_arti,:p_nivel,:p_spot,:p_segundo,:p_fech_ini,:p_fech_fin,:p_pases,:p_total,:p_programa,:p_costo_seg,:p_detalle) 
         """
+    cursor.execute(sql,p_periodo=periodo,p_fecha=fecha,p_no_orden=no_orden,p_ruta=ruta,p_no_docu=no_docu,p_no_item=no_item,p_no_arti=no_arti,p_nivel=nivel,p_spot=spot,p_segundo=segundo,p_fech_ini=fech_ini,p_fech_fin=fech_fin,p_pases=pases,p_total=total,p_programa=programa,p_costo_seg=costo_seg,p_detalle=detalle) 

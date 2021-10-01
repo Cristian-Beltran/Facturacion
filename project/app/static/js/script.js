@@ -36,5 +36,4 @@ cedula.onfocus = function(){
 
 total_items.onchange = function(){
     items = total_items.value;
-    
 }
