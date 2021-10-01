@@ -1,10 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import html5,StringField,DateField,SubmitField,SelectField,IntegerField,DecimalField,FieldList,FormField
-from wtforms import validators
-from db import grupos,clientes
+from wtforms.fields import html5,StringField,DateField,SubmitField,SelectField,IntegerField,DecimalField
+from wtforms import validators,Form,FieldList,FormField
+from db import grupos,articulos
 class FilterForm(FlaskForm):
     fecha = StringField('Ingrese una fecha',[validators.Required()])
     submit = SubmitField('Enviar')
+
+
 
 
 class RegisterFactu(FlaskForm):
@@ -13,17 +15,13 @@ class RegisterFactu(FlaskForm):
     no_ruc = html5.IntegerField('Ingrese el CI o NIT ',[validators.Required()])
     nbr_cliente = StringField('Nombre de cliente',[validators.Required()])
     direccion = StringField('Ingrese la dirección',[validators.Required()])
-    observ1 = StringField('Observacion',[validators.Required()])
+    observ1 = StringField('Observacion (opcional)')
     total_items = SelectField('Numero de items',[validators.Required()],choices=[(i,i) for i in range(1,21)]) 
-    tipo_doc_ref = StringField('Tipo de documento referencia(Opcional)',[validators.Required()])
-    ruta_ref = StringField('Ruta referencia(Opcional)',[validators.Required()])
-    no_docu_ref = StringField('No de documento referencia(Opcional)',[validators.Required()])
+    tipo_doc_ref = StringField('Tipo de documento referencia(Opcional)')
+    ruta_ref = StringField('Ruta referencia(Opcional)')
+    no_docu_ref = StringField('No de documento referencia(Opcional)')
     moneda = SelectField('Seleccione una moneda',[validators.Required()],choices=[('P','Bolivianos'),('D','Dolares')])
-    submit = SubmitField('Guardar')
-
-
-class DetailsForm(FlaskForm):
-    no_arti = SelectField('Selecciona un articulo', [validators.Required()],choices=[])
+    no_arti = SelectField('Selecciona un articulo', [validators.Required()],choices=articulos())
     precio = html5.DecimalField('Ingrese un monto',[validators.Required()])
     no_item_ref = StringField('Referencia del item (opcional)')
     nivel = StringField('Ingrese el nivel',[validators.Required()])
@@ -34,6 +32,9 @@ class DetailsForm(FlaskForm):
     pases = html5.IntegerField('Ingrese el numero de pases',[validators.Required()])
     programa = StringField('Ingrese el programa',[validators.Required()])
     detalle = StringField('Detalle del articulo (opciona)')
+    Submit = SubmitField('Guardar')
+
+
 
 
 

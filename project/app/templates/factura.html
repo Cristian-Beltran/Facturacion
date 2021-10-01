@@ -10,7 +10,21 @@
 {% block content %}
     <div class="container">
         <form method="POST">
-        {{render_field(contex.factu_form.grupo)}}
+            {{contex.factu_form.csrf_token}}
+            {{render_field(contex.factu_form.grupo)}}
+            {{render_field(contex.factu_form.cliente)}}
+            {{render_field(contex.factu_form.no_ruc)}}
+            {{render_field(contex.factu_form.nbr_cliente)}}
+            {{render_field(contex.factu_form.direccion)}}
+            {{render_field(contex.factu_form.observ1)}}
+            {{render_field(contex.factu_form.total_items)}}
+            {{render_field(contex.factu_form.tipo_doc_ref)}}
+            {{render_field(contex.factu_form.ruta_ref)}}
+            {{render_field(contex.factu_form.moneda)}}
+            {% for detail in contex.factu_form.detalle%}
+                {{render_field(detail)}}
+            {% endfor%}
+            <input type="submit" value="Guardar">
         </form>
     </div>
 {% endblock %}

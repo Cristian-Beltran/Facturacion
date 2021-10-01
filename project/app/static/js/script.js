@@ -2,7 +2,7 @@ let grupo_select = document.getElementById('grupo');
 let cliente_select = document.getElementById('cliente');
 let cedula = document.getElementById('no_ruc');
 let nombre = document.getElementById('nbr_cliente');
-
+let total_items = document.getElementById('total_items');
 
 grupo_select.onchange = function() {
     grupo = grupo_select.value;
@@ -34,3 +34,7 @@ cedula.onfocus = function(){
     });
 }
 
+total_items.onchange = function(){
+    items = total_items.value;
+    
+}
