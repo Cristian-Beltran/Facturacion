@@ -27,7 +27,7 @@ def facturacion():
         now = datetime.now()
         data = arfapar()
         orden = data[0]
-        no_docu = data[1] +1
+        no_docu = int(data[1]) +1
         grupo = (factu_form.grupo.data)
         if int(grupo) < 50:
             ruta = '01'

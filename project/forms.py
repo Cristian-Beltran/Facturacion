@@ -23,7 +23,7 @@ class RegisterFactu(FlaskForm):
     moneda = SelectField('Seleccione una moneda',[validators.Required()],choices=[('P','Bolivianos'),('D','Dolares')])
     no_arti = SelectField('Selecciona un articulo', [validators.Required()],choices=articulos())
     precio = FloatField('Ingrese un monto',[validators.Required()])
-    no_item_ref = StringField('Referencia del item (opcional)')
+    no_item_ref = html5.IntegerField('Referencia del item (opcional)')
     nivel = StringField('Ingrese el nivel',[validators.Required()])
     spot = StringField('Ingrese el spot',[validators.Required()])
     segundo = StringField('Ingrese el segundo',[validators.Required()])
