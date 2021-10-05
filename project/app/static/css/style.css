@@ -1,9 +1,163 @@
-body{
+body {
     background-color: #ffffff;
-}
-*{
-    margin:0;
-    padding:0;
-    border:0;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+
+header {
+    display: flex;
+    margin: auto;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+p {
+    padding-bottom: 5px;
+}
+
+.logo {
+    height: 100px;
+    width: 150px;
+    flex: auto;
+}
+
+.title {
+    flex: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.datos {
+    width: 350px;
+}
+
+.borde {
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+
+.cliente {
+    padding: 5px 15px 20px 20px;
+    padding-right: 80px;
+    width: 100%;
+    display: flex;
+}
+
+
+
+
+
+.fecha {
+    margin-left: auto;
+}
+
+.detalle>table {
+    width: 100%;
+    text-align: center;
+}
+
+.detalle {
+    height: 800px;
+}
+
+.fila>th {
+    padding: 5px;
+}
+
+.fila>th:nth-child(1) {
+    width: 500px;
+}
+
+.fila>td {
+    font-size: 13px;
+    padding: 5px;
+    height: 20px;
+}
+
+.fila>td:nth-child(1) {
+    text-align: left;
+}
+
+
+
+
+
+.cuentas {
+    display: flex;
+}
+
+.subtotal {
+    margin-left: auto;
+    width: 250px;
+    border-radius: 0px 20px 20px 0;
+}
+
+.control {
+    display: flex;
+    flex:auto;
+    border-radius: 20px 0 0 20px;
+    flex-direction: row-reverse;
+    padding-bottom: 20px;
+}
+.control > div{
+    flex:auto;
+}
+.emision {
+    text-align: right;
+    margin-right: auto;
+}
+
+.total {
+    display: flex;
+}
+
+.texto {
+    border-radius: 20px 0 0 20px;
+    flex: auto;
+    padding-bottom: 20px;
+}
+.numero{
+    margin-left: auto;
+    width: 250px;
+    border-radius: 0px 20px 20px 0;
+    padding-bottom: 20px;
+}
+.ley-qr{
+    display: flex;
+    box-sizing: border-box;
+}
+
+.ley{
+    text-align: center;
+    padding: 0 50px;
+    margin: auto;
+    flex: auto;
+}
+.qr{
+    width: 750px;
+    height:140px;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+.qr > img{
+    margin: auto;
+}

@@ -1,12 +1,107 @@
- {{contex.head}}
-<br><br><br><br>
-<p>Aqui comienzan los detalles</p>
-<br>
+<!DOCTYPE html>
+<html lang="en">
 
-{% for detail in contex.detail %}
- {{detail}}
- <br><br>
-{% endfor %}
-<br><br><br>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', _external=True) }}">
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            este es un logo
+        </div>
+        <div class="title">
+            <h1>FACTURA</h1>
+        </div>
+        <div class="data">
+            <div class="borde datos">
+                <p><b>NIT</b> :1020245021</p>
+                <p><b>Factura Nº</b> :{{contex.head[1]}}</p>
+                <p><b>Autorización</b> :{{contex.head[13]}}</p>
+            </div>
+            <h3>ORIGINAL</h3>
+        </div>
+    </header>
+    <div class="borde cliente">
+        <div>
+            <p><b>NIT/C.I.</b>: {{contex.head[5]}}</p>
+            <p><b>CLIENTE</b> : {{contex.head[6]}}</p>
+        </div>
+        <div class="fecha">La Paz , {{contex.date}} </div>
+    </div>
+    <div class="borde detalle">
+        <table>
+            <thead>
+                <tr class="fila">
+                    <th rowspan=" 2">Detalle</th>
+                    <th rowspan="2">Nivel</th>
+                    <th colspan="2">Contrato</th>
+                    <th rowspan="2">Dur.Seg.</th>
+                    <th rowspan="2">Nº de Pases</th>
+                    <th rowspan="2">Precio Seg.</th>
+                    <th rowspan="2">Precio</th>
+                </tr>
+                <tr>
+                    <th> Inicio </th>
+                    <th> Fin </th>
+                </tr>
+            </thead>
+            <tr class="fila">
+                <td>Por publicidad emitida</td>
+            </tr>
+            {% for data in contex.detail %}
+            <tr class="fila">
+                <td>{{data[15]}} {{data[9]}}</td>
+                <td>{{data[8]}}</td>
+                <td>{{data[11].strftime('%d/%m/%Y')}}</td>
+                <td>{{data[12].strftime('%d/%m/%Y')}}</td>
+                <td>{{data[10]}}</td>
+                <td>{{data[13]}}</td>
+                <td>{{data[16]}}</td>
+                <td>{{data[14]}}</td>
+            </tr>
+            <tr></tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="cuentas">
+        <div class="borde control">
+            <div class="emision">
+                <p><b>Tipo de cambio</b>: {{contex.head[15]}}</p>
+                <p><b>Fecha Límite de Emisión:</b> </p>
+            </div>
+            <div class="codigo">
+                <br>
+                <p><b>Código de Control:</b> {{contex.head[17]}}</p>
+            </div>
+        </div>
+        <div class="borde subtotal">
+            <p><b>Subtotal $us</b>: {{contex.head[11]}}</p>
+            <p><b>Subtotal Bs</b>: {{contex.head[11]*6.96}}</p>
+            <p><b>Descuento Bs</b>: {{contex.head[20]}}</p>
+        </div>
+    </div>
+    <div class="total">
+        <div class="borde texto">
+            <p><b>SON:</b> mil dociento</p>
+        </div>
+        <div class="borde numero">
+            <p><b>TOTAL BS :</b>{{contex.head[11]*6.96}}</p>
+        </div>
+    </div>
+    <div class="ley-qr">
+        <div class="ley">
+            <p class="texto-ley">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, ipsam. Officiis,
+                reiciendis. Praesentium odit commodi laudantium illo dicta ex consequatur doloribus aliquam in
+                voluptates fugit autem omnis hic, inventore deleniti?</p>
+        </div>
+        <div class="qr">
+            <img src="{{ qrcode("asdfadf",box_size=5) }}">
+        </div>
+    </div>
 
 
+</body>
+
+</html>

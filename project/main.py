@@ -1,10 +1,25 @@
-from flask import Flask,render_template,jsonify,request,redirect,url_for
+from flask import Flask,render_template,jsonify,request,redirect,url_for,make_response
+from flask_qrcode import QRcode
 from db import table,header,details,clientes,cliente,arfapar,insert_cabecera,insert_detalle
 from app import create_app
 from forms import FilterForm,RegisterFactu
-from pdf import printPDF
 from datetime import datetime
+import pdfkit
+import os
+
 app = create_app()
+QRcode(app)
+
+def date(fecha):
+    print(fecha)
+    meses = ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Octubre","Noviembre","Diciembre")
+    dias = ("Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo")
+    year = fecha.year
+    mes = meses[fecha.month - 1]
+    dia = dias[fecha.weekday()]
+    message = f"{dia} {fecha.day} de {mes} de {year}"
+    print(message)
+    return message
 
 @app.route('/',methods=['GET', 'POST'])
 def index(): 
@@ -59,34 +74,46 @@ def facturacion():
 
         insert_detalle(no_docu,ruta,1,no_arti,precio,precio-(precio*.13),precio*.13,no_item_ref,orden,now.year,now.date(),nivel,spot,segundo,fech_ini,fech_fin,pases,programa,(precio-(precio*0.13))/pases,detalle)
         return redirect(url_for('index'))
+
     contex = {
         'factu_form':factu_form,
     }
     return render_template('factura.html',contex=contex) 
 
 
-
 @app.route('/download/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
 def download_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
     head = header(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
     detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
-    print(type(head))
+    fecha = date(head[7])
     contex = {
         'head' : head,
         'detail': detail,
+        'date':fecha 
     }
-    printPDF()
-    return render_template('print.html',contex=contex)
+    rendered = render_template('print.html',contex=contex)
+    pdf = pdfkit.from_string(rendered,False)
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'attachment; filename=test.pdf'
+    return response
 
 @app.route('/print/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
 def print_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
     head = header(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
     detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
+    fecha = date(head[7])
     contex = {
         'head' : head,
-        'detail': detail
+        'detail': detail,
+        'date':fecha
     }
-    return render_template('print.html',contex=contex)
+    rendered = render_template('print.html',contex=contex)
+    pdf = pdfkit.from_string(rendered,False)
+    response = make_response(pdf)
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline; filename=test.pdf'
+    return response
 
 
 
