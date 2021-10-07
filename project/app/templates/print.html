@@ -10,7 +10,6 @@
     <header>
         <div class="logo">
             este es un logo
-            <p>{{contex.arfapar[1]}}</p>
         </div>
         <div class="title">
             <h1>FACTURA</h1>
@@ -22,6 +21,7 @@
                 <p><b>Autorización</b> :{{contex.head[13]}}</p>
             </div>
             <h3>ORIGINAL</h3>
+            <p class="texto">{{contex.arfapar[1]}}</p>
         </div>
     </header>
     <div class="borde cliente">
@@ -60,7 +60,11 @@
                 <td>{{data[10]}}</td>
                 <td>{{data[13]}}</td>
                 <td>{{data[16]}}</td>
-                <td>{{data[14]}}</td>
+                {% if ((data[14]%1)*100)/10 == 0 %}
+                <td>{{"{:,}".format(data[14] | round(2))}}0</td>
+                {% else %}
+                <td>{{"{:,}".format(data[14] | round(2))}}</td>
+                {% endif%}
             </tr>
             <tr></tr>
             {% endfor %}
@@ -78,13 +82,23 @@
             </div>
         </div>
         <div class="borde subtotal">
-            {% if contex.head[15] == 'D' %}
-            <p><b>Subtotal $us</b>: {{contex.head[11]}}</p>
-            <p><b>Subtotal Bs</b>: {{contex.head[11]*6.96}}</p>
+            {% if ((contex.head[11]%1)*100)/10 == 0 %}
+                {% if contex.head[15] == 'D' %}
+                <p><b>Subtotal $us</b>: {{"{:,}".format(contex.head[11] | round(2) ) }}0</p>
+                <p><b>Subtotal Bs</b>: {{"{:,}".format((contex.head[11]*6.96) | round(2) )}}</p>
+                {% else %}
+                <p><b>Subtotal Bs</b>: {{"{:,}".format(contex.head[11])}}0</p>
+                {% endif %}
+                <p><b>Descuento Bs</b>: {{contex.head[20]}}0</p>
             {% else %}
-            <p><b>Subtotal Bs</b>: {{contex.head[11]}}</p>
+                {% if contex.head[15] == 'D' %}
+                <p><b>Subtotal $us</b>: {{"{:,}".format(contex.head[11] | round(2) ) }}</p>
+                <p><b>Subtotal Bs</b>: {{"{:,}".format((contex.head[11]*6.96) | round(2) )}}</p>
+                {% else %}
+                <p><b>Subtotal Bs</b>: {{"{:,}".format(contex.head[11])}}</p>
+                {% endif %}
+                <p><b>Descuento Bs</b>: {{contex.head[20]}}0</p>
             {% endif %}
-            <p><b>Descuento Bs</b>: {{contex.head[20]}}</p>
         </div>
     </div>
     <div class="total">
@@ -92,12 +106,24 @@
             <p><b>SON:</b> {{contex.dinero_texto}}</p>
         </div>
         <div class="borde numero">
-            <p><b>TOTAL BS :</b>{{contex.head[11]*6.96}}</p>
+            {% if ((contex.head[11]%1)*100)/10 == 0 %}
+                {% if contex.head[15] == 'D' %}
+                <p><b>TOTAL BS :</b>{{"{:,}".format((contex.head[11]*6.96) | round(2)  ) }}</p>
+                {% else %}
+                <p><b>TOTAL BS :</b>{{"{:,}".format(contex.head[11] | round(2) )}}0</p>
+                {% endif%}
+            {% else %}
+                {% if contex.head[15] == 'D' %}
+                <p><b>TOTAL BS :</b>{{"{:,}".format((contex.head[11]*6.96) | round(2)  ) }}</p>
+                {% else %}
+                <p><b>TOTAL BS :</b>{{"{:,}".format(contex.head[11] | round(2) )}}</p>
+                {% endif%}
+           {% endif %}
         </div>
     </div>
     <div class="ley-qr">
-        <div class="ley">
-            <p class="texto-ley">
+        <div class="ley texto">
+            <p class="ley_texto">
                 <p>
                     LA CASILLA "TOTAL" ES EL IMPORTE BASE PARA CRÉDITO FISCAL
                 </p>
