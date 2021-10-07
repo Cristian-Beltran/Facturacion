@@ -147,14 +147,16 @@ p {
 
 .ley{
     text-align: center;
-    padding: 0 50px;
+    width: 70%; 
+    padding: 0 25px;
     margin: auto;
-    flex: auto;
+    font-size: 10px;
 }
 .qr{
-    width: 750px;
+    width:30%;
     height:140px;
     margin-left: auto;
+    flex: auto;
     display: flex;
     align-items: center;
 }

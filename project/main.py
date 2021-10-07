@@ -1,25 +1,15 @@
-from flask import Flask,render_template,jsonify,request,redirect,url_for,make_response
+from flask import render_template,jsonify,request,redirect,url_for,make_response
 from flask_qrcode import QRcode
-from db import table,header,details,clientes,cliente,arfapar,insert_cabecera,insert_detalle
+from db import table,header,details,clientes,cliente,arfapar_insert,insert_cabecera,insert_detalle,nit,arfapar_impresion
 from app import create_app
 from forms import FilterForm,RegisterFactu
 from datetime import datetime
+from tools import numero_to_letras,date
 import pdfkit
-import os
 
 app = create_app()
 QRcode(app)
 
-def date(fecha):
-    print(fecha)
-    meses = ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Octubre","Noviembre","Diciembre")
-    dias = ("Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo")
-    year = fecha.year
-    mes = meses[fecha.month - 1]
-    dia = dias[fecha.weekday()]
-    message = f"{dia} {fecha.day} de {mes} de {year}"
-    print(message)
-    return message
 
 @app.route('/',methods=['GET', 'POST'])
 def index(): 
@@ -40,7 +30,7 @@ def facturacion():
     factu_form = RegisterFactu()
     if request.method=='POST':
         now = datetime.now()
-        data = arfapar()
+        data = arfapar_insert()
         orden = data[0]
         no_docu = int(data[1]) +1
         grupo = (factu_form.grupo.data)
@@ -81,15 +71,28 @@ def facturacion():
     return render_template('factura.html',contex=contex) 
 
 
+
+
+
+
+"""Direcciones de descarga e impresión"""
+
 @app.route('/download/<string:no_docu>/<string:grupo>/<string:no_cliente>/<string:centrod>/<string:tipo_doc>/<string:ruta>/<string:no_orden>')
 def download_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
     head = header(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
     detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
     fecha = date(head[7])
+    dinero_texto = numero_to_letras(head[11]*6.96)
+    arfapar = arfapar_impresion(head[13])
+    nit_empresa = nit() 
     contex = {
         'head' : head,
         'detail': detail,
-        'date':fecha 
+        'date':fecha,
+        'dinero_texto':dinero_texto,
+        'arfapar':arfapar,
+        'nit':nit_empresa
+
     }
     rendered = render_template('print.html',contex=contex)
     pdf = pdfkit.from_string(rendered,False)
@@ -103,10 +106,16 @@ def print_fact(no_docu,grupo,no_cliente,centrod,tipo_doc,ruta,no_orden):
     head = header(centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_orden)
     detail = details(centrod,tipo_doc,ruta,no_orden,no_docu)
     fecha = date(head[7])
+    dinero_texto = numero_to_letras(head[11]*6.96)
+    arfapar = arfapar_impresion(head[13])
+    nit_empresa = nit() 
     contex = {
         'head' : head,
         'detail': detail,
-        'date':fecha
+        'date':fecha,
+        'dinero_texto':dinero_texto,
+        'arfapar':arfapar,
+        'nit':nit_empresa
     }
     rendered = render_template('print.html',contex=contex)
     pdf = pdfkit.from_string(rendered,False)

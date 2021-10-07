@@ -89,12 +89,32 @@ def articulos():
     result = cursor.execute(sql)
     return result.fetchall()
 
-def arfapar():
+def arfapar_insert():
     sql="""
         select orden, nume_act from arfapar where uso='S'
         """
     result = cursor.execute(sql)
+
+    sql = """Update arfapar set nume_act=:p_nume_act where uso='S'"""
+    cursor.execute(sql,p_nume_act=str(int(result[1])+1))
     return result.fetchone()
+
+def arfapar_impresion(orden):
+    sql="""
+        select * from arfapar where orden=:p_orden"""
+    
+    datos = cursor.execute(sql,p_orden=orden).fetchone()
+    sql="""
+        select detalle from arfa_texto where llave=:p_rubro 
+        """
+    rubro = cursor.execute(sql,p_rubro=datos[15]).fetchone()
+    sql="""
+        select detalle from arfa_texto where llave=:p_ley 
+        """
+    ley = cursor.execute(sql,p_ley=datos[16]).fetchone()
+    result=[datos[14],rubro[0],ley[0]]
+    return result
+    
 
 def insert_cabecera(no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,observ1,total_items,sub_total,impuesto,total,tipo_doc_ref,ruta_ref,no_docu_ref,no_orden,moneda):
     sql="""
@@ -111,3 +131,9 @@ def insert_detalle(no_docu,ruta,no_item,no_arti,precio,total,iven_n,no_item_ref,
         insert into arfafl_det(no_cia,centrod,tipo_doc,periodo,fecha,no_f300,ruta,no_factu,no_linea,bodega,clase,categoria,no_arti,nivel,spot,segundo,fech_ini,fech_fin,pases,total,programa,costo_seg,detalle) values('01', '01','01',:p_periodo,:p_fecha,:p_no_orden,:p_ruta,:p_no_docu,:p_no_item,'0000','000','000',:p_no_arti,:p_nivel,:p_spot,:p_segundo,:p_fech_ini,:p_fech_fin,:p_pases,:p_total,:p_programa,:p_costo_seg,:p_detalle) 
         """
     cursor.execute(sql,p_periodo=periodo,p_fecha=fecha,p_no_orden=no_orden,p_ruta=ruta,p_no_docu=no_docu,p_no_item=no_item,p_no_arti=no_arti,p_nivel=nivel,p_spot=spot,p_segundo=segundo,p_fech_ini=fech_ini,p_fech_fin=fech_fin,p_pases=pases,p_total=total,p_programa=programa,p_costo_seg=costo_seg,p_detalle=detalle) 
+
+
+def nit():
+    sql ="""select no_ruc from ARCGMC where no_cia='01'"""
+    result = cursor.execute(sql)
+    return result.fetchone() 

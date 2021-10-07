@@ -10,13 +10,14 @@
     <header>
         <div class="logo">
             este es un logo
+            <p>{{contex.arfapar[1]}}</p>
         </div>
         <div class="title">
             <h1>FACTURA</h1>
         </div>
         <div class="data">
             <div class="borde datos">
-                <p><b>NIT</b> :1020245021</p>
+                <p><b>NIT</b> :{{contex.nit[0]}}</p>
                 <p><b>Factura Nº</b> :{{contex.head[1]}}</p>
                 <p><b>Autorización</b> :{{contex.head[13]}}</p>
             </div>
@@ -68,8 +69,8 @@
     <div class="cuentas">
         <div class="borde control">
             <div class="emision">
-                <p><b>Tipo de cambio</b>: {{contex.head[15]}}</p>
-                <p><b>Fecha Límite de Emisión:</b> </p>
+                <p><b>Tipo de cambio</b>: 6.96</p>
+                <p><b>Fecha Límite de Emisión:</b> {{contex.arfapar[0].strftime('%d/%m/%Y')}}</p>
             </div>
             <div class="codigo">
                 <br>
@@ -77,14 +78,18 @@
             </div>
         </div>
         <div class="borde subtotal">
+            {% if contex.head[15] == 'D' %}
             <p><b>Subtotal $us</b>: {{contex.head[11]}}</p>
             <p><b>Subtotal Bs</b>: {{contex.head[11]*6.96}}</p>
+            {% else %}
+            <p><b>Subtotal Bs</b>: {{contex.head[11]}}</p>
+            {% endif %}
             <p><b>Descuento Bs</b>: {{contex.head[20]}}</p>
         </div>
     </div>
     <div class="total">
         <div class="borde texto">
-            <p><b>SON:</b> mil dociento</p>
+            <p><b>SON:</b> {{contex.dinero_texto}}</p>
         </div>
         <div class="borde numero">
             <p><b>TOTAL BS :</b>{{contex.head[11]*6.96}}</p>
@@ -92,9 +97,19 @@
     </div>
     <div class="ley-qr">
         <div class="ley">
-            <p class="texto-ley">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores, ipsam. Officiis,
-                reiciendis. Praesentium odit commodi laudantium illo dicta ex consequatur doloribus aliquam in
-                voluptates fugit autem omnis hic, inventore deleniti?</p>
+            <p class="texto-ley">
+                <p>
+                    LA CASILLA "TOTAL" ES EL IMPORTE BASE PARA CRÉDITO FISCAL
+                </p>
+                <p>
+                    CUALQUIER DEVOLUCIÓN DEBERÁ REALIZARSE DENTRO EL TÉRMINODE 3 DÍAS DE GIRADA ESTA FACTURA
+                </p>
+                <p>
+                    "ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ESTÁ SERA SANCIONADO DE ACUERDO A
+                    LA LEY"
+                </p>
+                <p>{{contex.arfapar[2]}}</p>
+            </p>
         </div>
         <div class="qr">
             <img src="{{ qrcode("asdfadf",box_size=5) }}">
