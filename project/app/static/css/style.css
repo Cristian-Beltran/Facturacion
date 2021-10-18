@@ -72,29 +72,51 @@ p,h3{
 .detalle>table {
     width: 100%;
     text-align: center;
+    border-spacing: 0px;
+    border: 1px solid;
+    border-radius: 20px;
+    height: 800px;
+    margin-bottom: 10px;
 }
-
+.datos{
+    border-left: 1px solid;
+}
 .detalle {
-    height: 700px;
+    padding:0;
 }
 
 .fila>th {
     padding: 5px;
+    border-left:1px solid;
+    border-bottom:1px solid;
+}
+.fechas > th{
+    padding: 5px;
+    border-left:1px solid;
+    border-bottom:1px solid;
 }
 
 .fila>th:nth-child(1) {
-    width: 500px;
+    border-left: 0px;
+    width: 40%;
 }
 
 .fila>td {
     font-size: 13px;
     padding: 5px;
-    height: 20px;
+    border-left:1px solid;
 }
 
 .fila>td:nth-child(1) {
     text-align: left;
+    border-left: 0px;
 }
+.datos-factura{
+    height:10px;
+    border:1px solid;
+}
+
+
 
 
 
@@ -110,6 +132,9 @@ p,h3{
     border-radius: 0px 20px 20px 0;
 }
 
+div > span {
+    float: right;
+}
 .control {
     display: flex;
     flex:auto;
@@ -129,7 +154,7 @@ p,h3{
     display: flex;
 }
 
-.texto {
+.texto_dinero {
     border-radius: 20px 0 0 20px;
     flex: auto;
     padding-bottom: 20px;

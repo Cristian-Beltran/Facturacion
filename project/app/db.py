@@ -91,13 +91,12 @@ def articulos():
 
 def arfapar_insert():
     sql="""
-        select orden, nume_act from arfapar where uso='S'
+        select orden, nume_act, llave from arfapar where uso='S'
         """
-    result = cursor.execute(sql)
-
+    result = cursor.execute(sql).fetchone()
     sql = """Update arfapar set nume_act=:p_nume_act where uso='S'"""
-    cursor.execute(sql,p_nume_act=str(int(result[1])+1))
-    return result.fetchone()
+    cursor.execute(sql,p_nume_act=(int(result[1])+1))
+    return result
 
 def arfapar_impresion(orden):
     sql="""
@@ -116,11 +115,11 @@ def arfapar_impresion(orden):
     return result
     
 
-def insert_cabecera(no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,observ1,total_items,sub_total,impuesto,total,tipo_doc_ref,ruta_ref,no_docu_ref,no_orden,moneda):
+def insert_cabecera(no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,observ1,total_items,sub_total,impuesto,total,tipo_doc_ref,ruta_ref,no_docu_ref,no_orden,moneda,cod_control):
     sql="""
-        insert into interfaz_fe(movimiento,origen,no_cia,centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,tipo_cambio,observ1,observ2,observ3,total_items,sub_total,descuento,impuesto,total,imp_sino,porc_iv,tipo_doc_ref,ruta_ref,no_docu_ref,no_serie,no_orden,no_sucursal,validado,error,moneda,servicio_fact,tipo_fact,afecta_saldo,impreso,cod_control,observ4,rol,regional) values('FA','TV','01','01','01',:p_no_docu,:p_ruta,:p_grupo,:p_no_cliente,:p_no_ruc,:p_nbr_cliente,:p_direccion,:p_fecha,6.96,:p_observ1,'',:p_observ3,:p_total_items,:p_sub_total,0,:p_impuesto,:p_total,'S',13,:p_tipo_doc_ref,:p_ruta_ref,:p_no_docu_ref,'1',:p_no_orden,'1','N','',:p_moneda,'.','E','S','S','','','','')
+        insert into interfaz_fe(movimiento,origen,no_cia,centrod,tipo_doc,no_docu,ruta,grupo,no_cliente,no_ruc,nbr_cliente,direccion,fecha,tipo_cambio,observ1,observ2,observ3,total_items,sub_total,descuento,impuesto,total,imp_sino,porc_iv,tipo_doc_ref,ruta_ref,no_docu_ref,no_serie,no_orden,no_sucursal,validado,error,moneda,servicio_fact,tipo_fact,afecta_saldo,impreso,cod_control,observ4,rol,regional) values('FA','TV','01','01','01',:p_no_docu,:p_ruta,:p_grupo,:p_no_cliente,:p_no_ruc,:p_nbr_cliente,:p_direccion,:p_fecha,6.96,:p_observ1,'',:p_observ3,:p_total_items,:p_sub_total,0,:p_impuesto,:p_total,'S',13,:p_tipo_doc_ref,:p_ruta_ref,:p_no_docu_ref,'1',:p_no_orden,'1','N','',:p_moneda,'.','E','S','S',:p_cod_control,'','','')
         """
-    cursor.execute(sql,p_no_docu=no_docu,p_ruta=ruta,p_grupo=grupo,p_no_cliente=no_cliente,p_no_ruc=no_ruc,p_nbr_cliente=nbr_cliente,p_direccion=direccion,p_fecha=fecha,p_observ1=observ1,p_observ3=no_docu,p_total_items=total_items,p_sub_total=sub_total,p_impuesto=impuesto,p_total=total,p_tipo_doc_ref=tipo_doc_ref,p_ruta_ref=ruta_ref,p_no_docu_ref=no_docu_ref,p_no_orden=no_orden,p_moneda=moneda)
+    cursor.execute(sql,p_no_docu=no_docu,p_ruta=ruta,p_grupo=grupo,p_no_cliente=no_cliente,p_no_ruc=no_ruc,p_nbr_cliente=nbr_cliente,p_direccion=direccion,p_fecha=fecha,p_observ1=observ1,p_observ3=no_docu,p_total_items=total_items,p_sub_total=sub_total,p_impuesto=impuesto,p_total=total,p_tipo_doc_ref=tipo_doc_ref,p_ruta_ref=ruta_ref,p_no_docu_ref=no_docu_ref,p_no_orden=no_orden,p_moneda=moneda,p_cod_control=cod_control)
 
 def insert_detalle(no_docu,ruta,no_item,no_arti,precio,total,iven_n,no_item_ref,no_orden,periodo,fecha,nivel,spot,segundo,fech_ini,fech_fin,pases,programa,costo_seg,detalle):
     sql="""
@@ -137,3 +136,8 @@ def nit():
     sql ="""select no_ruc from ARCGMC where no_cia='01'"""
     result = cursor.execute(sql)
     return result.fetchone() 
+
+def codigo(p_orden,p_no_factu,p_nit,p_fecha,p_total,p_llave):
+    data = [p_orden,p_no_factu,p_nit,p_fecha,p_total,p_llave]
+    c_control = cursor.callfunc('Control7',str,data)
+    return c_control

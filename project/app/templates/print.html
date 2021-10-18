@@ -31,43 +31,59 @@
         </div>
         <div class="fecha">La Paz , {{contex.date}} </div>
     </div>
-    <div class="borde detalle">
-        <table>
+    <div class="detalle">
+        <table border>
             <thead>
                 <tr class="fila">
-                    <th rowspan=" 2">Detalle</th>
-                    <th rowspan="2">Nivel</th>
-                    <th colspan="2">Contrato</th>
-                    <th rowspan="2">Dur.Seg.</th>
-                    <th rowspan="2">Nº de Pases</th>
-                    <th rowspan="2">Precio Seg.</th>
-                    <th rowspan="2">Precio</th>
+                    <th rowspan="2" class="datos fila1">Detalle</th>
+                    <th rowspan="2" class="datos">Nivel</th>
+                    <th colspan="2" class="datos">Contrato</th>
+                    <th rowspan="2" class="datos">Dur.Seg.</th>
+                    <th rowspan="2" class="datos">Nº de Pases</th>
+                    <th rowspan="2" class="datos">Precio Seg.</th>
+                    <th rowspan="2" class="datos">Precio</th>
                 </tr>
-                <tr>
-                    <th> Inicio </th>
-                    <th> Fin </th>
+                <tr class="fechas">
+                    <th class="datos"> Inicio </th>
+                    <th class="datos"> Fin </th>
                 </tr>
             </thead>
-            <tr class="fila">
-                <td>Por publicidad emitida</td>
+            <tr class="fila datos-factura">
+                <td class="datos fila1">Por publicidad emitida</td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
             </tr>
             {% for data in contex.detail %}
-            <tr class="fila">
-                <td>{{data[15]}} {{data[9]}}</td>
-                <td>{{data[8]}}</td>
-                <td>{{data[11].strftime('%d/%m/%Y')}}</td>
-                <td>{{data[12].strftime('%d/%m/%Y')}}</td>
-                <td>{{data[10]}}</td>
-                <td>{{data[13]}}</td>
-                <td>{{data[16]}}</td>
-                {% if ((data[14]%1)*100)/10 == 0 %}
-                <td>{{"{:,}".format(data[14] | round(2))}}0</td>
+            <tr class="fila datos-factura">
+                <td class="datos fila1">{{data[15]}} {{data[9]}}</td>
+                <td class="datos">{{data[8]}}</td>
+                <td class="datos">{{data[11].strftime('%d/%m/%Y')}}</td>
+                <td class="datos">{{data[12].strftime('%d/%m/%Y')}}</td>
+                <td class="datos">{{data[10]}}</td>
+                <td class="datos">{{data[13]}}</td>
+                <td class="datos">{{data[16]}}</td>
+                {% if (((data[14]%1)*100)| round | int )%10 == 0 %}
+                <td class="datos">{{"{:,}".format(data[14] | round(2))}}0</td>
                 {% else %}
-                <td>{{"{:,}".format(data[14] | round(2))}}</td>
+                <td class="datos">{{"{:,}".format(data[14] | round(2))}}</td>
                 {% endif%}
             </tr>
-            <tr></tr>
             {% endfor %}
+            <tr class="fila">
+                <td class="datos fila1"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+                <td class="datos"></td>
+            </tr>
         </table>
     </div>
     <div class="cuentas">
@@ -82,43 +98,43 @@
             </div>
         </div>
         <div class="borde subtotal">
-            {% if ((contex.head[11]%1)*100)/10 == 0 %}
-                {% if contex.head[15] == 'D' %}
-                <p><b>Subtotal $us</b>: {{"{:,}".format(contex.head[11] | round(2) ) }}0</p>
-                <p><b>Subtotal Bs</b>: {{"{:,}".format((contex.head[11]*6.96) | round(2) )}}</p>
-                {% else %}
-                <p><b>Subtotal Bs</b>: {{"{:,}".format(contex.head[11])}}0</p>
-                {% endif %}
-                <p><b>Descuento Bs</b>: {{contex.head[20]}}0</p>
+            {% if (((contex.head[11]%1)*100) | round | int )%10 == 0 %}
+            {% if contex.head[15] == 'D' %}
+            <div><span> {{"{:,}".format(contex.head[11] | round(2) ) }}0</span><b>Subtotal $us</b> :</div>
+            <div><span> {{"{:,}".format((contex.head[11]*6.96) | round(2) )}}</span><b>Subtotal Bs</b> :</div>
             {% else %}
-                {% if contex.head[15] == 'D' %}
-                <p><b>Subtotal $us</b>: {{"{:,}".format(contex.head[11] | round(2) ) }}</p>
-                <p><b>Subtotal Bs</b>: {{"{:,}".format((contex.head[11]*6.96) | round(2) )}}</p>
-                {% else %}
-                <p><b>Subtotal Bs</b>: {{"{:,}".format(contex.head[11])}}</p>
-                {% endif %}
-                <p><b>Descuento Bs</b>: {{contex.head[20]}}0</p>
+            <div><span> {{"{:,}".format(contex.head[11])}}0</span><b>Subtotal Bs</b> :</div>
+            {% endif %}
+            <div><span> {{contex.head[20]}}0</span><b>Descuento Bs</b> :</div>
+            {% else %}
+            {% if contex.head[15] == 'D' %}
+            <div><span> {{"{:,}".format(contex.head[11] | round(2) ) }}</span><b>Subtotal $us</b> :</div>
+            <div><span> {{"{:,}".format((contex.head[11]*6.96) | round(2) ) }}</span><b>Subtotal Bs</b> :</div>
+            {% else %}
+            <div><span> {{"{:,}".format(contex.head[11])}}</span><b>Subtotal Bs</b> :</div>
+            {% endif %}
+            <div><span> {{contex.head[20]}}0</span><b>Descuento Bs</b> :</div>
             {% endif %}
         </div>
     </div>
     <div class="total">
-        <div class="borde texto">
+        <div class="borde texto_dinero">
             <p><b>SON:</b> {{contex.dinero_texto}}</p>
         </div>
         <div class="borde numero">
-            {% if ((contex.head[11]%1)*100)/10 == 0 %}
-                {% if contex.head[15] == 'D' %}
-                <p><b>TOTAL BS :</b>{{"{:,}".format((contex.head[11]*6.96) | round(2)  ) }}</p>
-                {% else %}
-                <p><b>TOTAL BS :</b>{{"{:,}".format(contex.head[11] | round(2) )}}0</p>
-                {% endif%}
+            {% if (((contex.head[11]%1)*100 | round | int )%10) == 0 %}
+            {% if contex.head[15] == 'D' %}
+            <p><b>TOTAL BS :</b>{{"{:,}".format((contex.head[11]*6.96) | round(2)  ) }}</p>
             {% else %}
-                {% if contex.head[15] == 'D' %}
-                <p><b>TOTAL BS :</b>{{"{:,}".format((contex.head[11]*6.96) | round(2)  ) }}</p>
-                {% else %}
-                <p><b>TOTAL BS :</b>{{"{:,}".format(contex.head[11] | round(2) )}}</p>
-                {% endif%}
-           {% endif %}
+            <p><b>TOTAL BS :</b>{{"{:,}".format(contex.head[11] | round(2) )}}0</p>
+            {% endif%}
+            {% else %}
+            {% if contex.head[15] == 'D' %}
+            <p><b>TOTAL BS :</b>{{"{:,}".format((contex.head[11]*6.96) | round(2)  ) }}</p>
+            {% else %}
+            <p><b>TOTAL BS :</b>{{"{:,}".format(contex.head[11] | round(2) )}}</p>
+            {% endif%}
+            {% endif %}
         </div>
     </div>
     <div class="ley-qr">
@@ -131,7 +147,8 @@
                     CUALQUIER DEVOLUCIÓN DEBERÁ REALIZARSE DENTRO EL TÉRMINODE 3 DÍAS DE GIRADA ESTA FACTURA
                 </p>
                 <p>
-                    "ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ESTÁ SERA SANCIONADO DE ACUERDO A
+                    "ESTA FACTURA CONTRIBUYE AL DESARROLLO DEL PAÍS, EL USO ILÍCITO DE ESTÁ SERA SANCIONADO DE
+                    ACUERDO A
                     LA LEY"
                 </p>
                 <p>{{contex.arfapar[2]}}</p>
