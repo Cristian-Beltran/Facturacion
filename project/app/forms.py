@@ -39,6 +39,9 @@ class RegisterFactu(FlaskForm):
     Submit = SubmitField('Guardar')
 
 
+class DosificacionForm(FlaskForm):
+
+
 
 
 

@@ -12,21 +12,21 @@ QRcode(app)
 
 
 @app.route('/',methods=['GET', 'POST'])
-def index(): 
+def index():
     filter_form = FilterForm()
     fecha = '2021'
     if filter_form.validate_on_submit():
         fecha = (filter_form.fecha.data)
         print(fecha)
-    data = table(fecha) 
+    data = table(fecha)
     contex = {
         'DATA':data,
         'filter':filter_form
     }
-    return render_template('index.html',contex=contex) 
+    return render_template('index.html',contex=contex)
 
 @app.route('/facturacion',methods=['GET', 'POST'])
-def facturacion():    
+def facturacion():
     factu_form = RegisterFactu()
     if request.method=='POST':
         now = datetime.now()
@@ -63,20 +63,27 @@ def facturacion():
         detalle = (factu_form.detalle.data)
 
         nit_empresa = nit()
-        cod_control = codigo(orden,no_docu,nit_empresa[0],now.date(),(precio-(precio*0.13)),llave) 
+        cod_control = codigo(orden,no_docu,nit_empresa[0],now.date(),(precio-(precio*0.13)),llave)
 
         print(tipo_doc_ref,type(tipo_doc_ref))
         insert_cabecera(no_docu,ruta,grupo,cliente,no_ruc,nbr_cliente,direccion,now.date(),observ1,total_items,(precio-(precio*.13)),(precio*.13),(precio),tipo_doc_ref,ruta_ref,no_docu_ref,orden,moneda,cod_control)
 
         insert_detalle(no_docu,ruta,1,no_arti,precio,precio-(precio*.13),precio*.13,no_item_ref,orden,now.year,now.date(),nivel,spot,segundo,fech_ini,fech_fin,pases,programa,(precio-(precio*0.13))/pases,detalle)
-        
+
         return redirect(url_for('index'))
 
     contex = {
         'factu_form':factu_form,
     }
-    return render_template('factura.html',contex=contex) 
+    return render_template('factura.html',contex=contex)
 
+
+@app.route('/dosificacion',methods=['GET', 'POST'])
+def dosificacion():
+    contex = {
+        'dosifi_form': 'Formulario'
+    }
+    return render_template('dosificacion.html')
 
 
 
