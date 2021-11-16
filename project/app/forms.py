@@ -40,8 +40,5 @@ class RegisterFactu(FlaskForm):
 
 
 class DosificacionForm(FlaskForm):
-
-
-
-
+    tipo_dosificación = SelectField('Seleccione el tipo de dosificación:',[validators.Required()],choices=[(1,'Manuales'),(2,'Electronicas [ATB, CBB, SCA]'),(3,'Electronicas [ATBitas, Radio, Full]')])
 

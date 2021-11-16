@@ -83,7 +83,7 @@ def dosificacion():
     contex = {
         'dosifi_form': 'Formulario'
     }
-    return render_template('dosificacion.html')
+    return render_template('dosificacion.html',contex=contex)
 
 
 
